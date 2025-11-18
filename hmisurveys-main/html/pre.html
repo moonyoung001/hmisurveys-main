@@ -144,6 +144,30 @@
         display: block;
         margin: 4px 0;
       }
+
+      table.group-table {
+        width: 100%;
+        table-layout: fixed;
+        border-collapse: collapse;
+      }
+
+      table.group-table th,
+      table.group-table td {
+        padding: 4px 8px;
+        vertical-align: top;
+      }
+
+      table.group-table th:nth-child(1),
+      table.group-table td:nth-child(1) {
+        width: 40%;
+      }
+
+      table.group-table th:nth-child(2),
+      table.group-table td:nth-child(2),
+      table.group-table th:nth-child(3),
+      table.group-table td:nth-child(3) {
+        width: 30%;
+      }
     </style>
   </head>
   <body>
@@ -767,52 +791,71 @@
           note.textContent =
             "Please rank the elements within this group (1 = most important, " +
             list.length +
-            " = least important).";
+            " = least important), and rate their importance (1–10).";
           block.appendChild(note);
 
           let html = `
-        <table>
-          <thead>
-            <tr>
-              <th>Element</th>
-              <th>Within-group rank (1–${list.length})</th>
-            </tr>
-          </thead>
-          <tbody>
-      `;
+      <table class="group-table">
+        <thead>
+          <tr>
+            <th>Element</th>
+            <th>Within-group rank (1–${list.length})</th>
+            <th>Importance (1–10)</th>
+          </tr>
+        </thead>
+        <tbody>
+    `;
 
           list.forEach((label) => {
             const safeName = label.toLowerCase().replace(/[^a-z0-9]+/g, "_");
 
-            // 如果这个组只有一个元素：自动 rank = 1
-            if (list.length === 1) {
-              html += `
-            <tr>
-              <td>${label}</td>
-              <td>
-                1 (only element in this group)
-                <input type="hidden" name="imp_${safeName}" value="1">
-              </td>
-            </tr>
-          `;
-            } else {
-              // 有多个元素：生成 1..k 的下拉
-              const options = Array.from({ length: list.length }, (_, i) => {
-                const v = i + 1;
-                return `<option value="${v}">${v}</option>`;
-              }).join("");
+            // rank options 1..k
+            const rankOptions = Array.from({ length: list.length }, (_, i) => {
+              const v = i + 1;
+              return `<option value="${v}">${v}</option>`;
+            }).join("");
 
+            // importance options 1..10
+            const scoreOptions = Array.from({ length: 10 }, (_, i) => {
+              const v = i + 1;
+              return `<option value="${v}">${v}</option>`;
+            }).join("");
+
+            if (list.length === 1) {
+              // 只有一个元素：rank 固定为 1（hidden），但仍然要评分 1–10
               html += `
-            <tr>
-              <td>${label}</td>
-              <td>
-                <select name="imp_${safeName}" required>
-                  <option value="">Select…</option>
-                  ${options}
-                </select>
-              </td>
-            </tr>
-          `;
+          <tr>
+            <td>${label}</td>
+            <td>
+              1 (only element in this group)
+              <input type="hidden" name="imp_${safeName}" value="1">
+            </td>
+            <td>
+              <select name="imp_score_${safeName}" required>
+                <option value="">Select…</option>
+                ${scoreOptions}
+              </select>
+            </td>
+          </tr>
+        `;
+            } else {
+              html += `
+          <tr>
+            <td>${label}</td>
+            <td>
+              <select name="imp_${safeName}" required>
+                <option value="">Select…</option>
+                ${rankOptions}
+              </select>
+            </td>
+            <td>
+              <select name="imp_score_${safeName}" required>
+                <option value="">Select…</option>
+                ${scoreOptions}
+              </select>
+            </td>
+          </tr>
+        `;
             }
           });
 
@@ -884,9 +927,10 @@
           document.body.appendChild(a);
           a.click();
           document.body.removeChild(a);
+          s;
           URL.revokeObjectURL(url);
 
-          alert("Your responses have been saved as: " + filename);
+          // alert("Your responses have been saved as: " + filename);
         });
     </script>
   </body>

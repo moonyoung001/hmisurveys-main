@@ -121,22 +121,18 @@
    Negative (reversed) items → Distrust subscale
 */
       const items = [
-        "The information displayed on the interface was clear and easy to interpret.", // Clarity
-        "The information displayed on the interface were easy to understand.", // Interpretability
-        "The interface displayed information that was relevant and useful for required traffic tasks.", // Relevance
-        "The organisation of the information matched how I approach required traffic tasks.", // Organisation
-        "The visual elements were presented in a consistent and predictable manner.", // Consistency
-        "The interface contained unnecessary clutter or distracting visual elements.", // Simplicity
-        "The interface helped me quickly extract the information needed to make decisions.", // Decision Support
-        "The information shown on the interface felt reliable and trustworthy.", // Reliability
-        "The information presentation would also support my work in other traffic situations.", // Transferability
-        // "I am suspicious of the system’s output.", // distrust
-        // "The system acts in my best interest.", // trust
-        // "The system has integrity.", // trust
+        "The information displayed on the interface was clear and easy to understand.", // Interpretability
+        "The information displayed on the interface was relevant and useful for the required traffic tasks.", // Relevance
+        "The organisation of the information matched how I approach the required traffic tasks.", // Organisation
+        "The information was presented in a consistent and predictable manner.", // Consistency
+        "The interface contained unnecessary or distracting information.", // Simplicity (reverse)
+        // "The information displayed on the interface helped me quickly extract what I needed to make decisions.", // Decision Support
+        "The information displayed on the interface felt reliable and trustworthy.", // Reliability
+        "The information displayed on the interface was also useful for other traffic situations.", // Transferability
       ];
 
       // 0-based indices of reversed items (Distrust subscale)
-      const reversedItems = [5];
+      const reversedItems = [4];
 
       // render Likert grid
       const tbody = document.getElementById("itemsBody");
