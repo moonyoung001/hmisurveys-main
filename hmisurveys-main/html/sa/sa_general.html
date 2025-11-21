@@ -73,8 +73,16 @@
       table.scale th:first-child,
       table.scale td:first-child {
         text-align: left;
-        width: 55%;
+        width: 45%;
       }
+      table.scale tbody tr:hover {
+        background-color: #f7faff;
+      }
+      table.scale input[type="radio"] {
+        transform: scale(1.2);
+        cursor: pointer;
+      }
+
       .next {
         margin-top: 20px;
         font-size: 15px;
@@ -167,7 +175,7 @@
       const questions = [
         // --- Level 1: Perception ---
         {
-          text: "I clearly perceive the traffic situation.",
+          text: "I could perceive the traffic situation.",
           level: "Perception",
         },
         // {
@@ -182,7 +190,7 @@
 
         // --- Level 2: Comprehension ---
         {
-          text: "I clearly understood the current traffic situation and how aircraft related to each other.",
+          text: "I could understood the current traffic situation and how aircraft related to each other.",
           level: "Comprehension",
         },
         // {

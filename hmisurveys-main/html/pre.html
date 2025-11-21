@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <title>UI Preference Pre-Study Questionnaire (Dynamic)</title>
+    <title>Preference Questionnaire</title>
     <style>
       body {
         font-family: Arial, sans-serif;
@@ -120,6 +120,10 @@
         font-weight: bold;
       }
 
+      .matrix-table tr:hover {
+        background-color: #f7f9ff;
+      }
+
       .matrix-question {
         text-align: left;
         width: 40%;
@@ -159,42 +163,91 @@
 
       table.group-table th:nth-child(1),
       table.group-table td:nth-child(1) {
-        width: 40%;
+        width: 45%;
       }
 
       table.group-table th:nth-child(2),
-      table.group-table td:nth-child(2),
-      table.group-table th:nth-child(3),
-      table.group-table td:nth-child(3) {
+      table.group-table td:nth-child(2) {
+        width: 55%;
+      }
+
+      .grouping-table {
+        width: 100%;
+        table-layout: fixed;
+        border-collapse: collapse;
+      }
+
+      .grouping-table th:first-child,
+      .grouping-table td:first-child {
         width: 30%;
       }
+
+      .grouping-table th:last-child,
+      .grouping-table td:last-child {
+        width: 35%;
+      }
+
+      .likert-table tr:hover {
+        background-color: #f7f9ff;
+      }
+
+      .likert-option input[type="radio"] {
+        width: 18px;
+        height: 18px;
+        cursor: pointer;
+      }
+      /* small card container: auto wrap */
+        #elements-pool {
+          display: flex;
+          flex-wrap: wrap; /* ★ 自动换行 */
+          gap: 8px; /* card 间距 */
+          /* max-width: 100%; 可调 */
+        }
+
+        .draggable {
+          width: 180px;
+          padding: 6px 8px;
+          font-size: 13px;
+          background: #eef3ff;
+          border: 1px solid #ccd6ff;
+          border-radius: 6px;
+          cursor: grab;
+        }
+
+        .groups-wrapper {
+          display: flex;
+          gap: 15px;
+          flex-wrap: wrap;
+        }
+
+        .group-dropzone {
+          min-height: 150px;
+          width: 260px;
+          background: #f7f7f7;
+          border: 2px dashed #ccc;
+          border-radius: 8px;
+          padding: 8px;
+        }
     </style>
   </head>
   <body>
-    <h1>Pre-Study Questionnaire</h1>
+    <h1>Questionnaire</h1>
 
     <!-- INTRO -->
     <section>
       <h2>Introduction</h2>
       <p>
-        In this study, we aim to understand how different users perceive and
-        prioritize various types of interface information that may appear during
-        a traffic-management task.
+        This survey helps us learn about your background and how you feel about the interface elements used in this experiment.
       </p>
       <p>
-        There are no right or wrong answers. Please respond based on your
-        intuition, experience, and personal preference.
+        There are no right or wrong answers. Please answer based on your
+        intuition, experience, and preferences.
       </p>
     </section>
 
     <form id="surveyForm">
-      <!-- BLOCK 1: GROUPING / NAMING / IMPORTANCE -->
       <section>
-        <h2>Background & Experience</h2>
-
         <h3>Demographics</h3>
-        <p>Please provide some basic background information.</p>
-
         <div class="demographic-block">
           <span class="demographic-question">Participant ID</span>
           <input
@@ -205,7 +258,7 @@
           />
         </div>
 
-        <div class="demographic-block">
+        <!-- <div class="demographic-block">
           <span class="demographic-question">Condition</span>
           <input
             type="text"
@@ -213,7 +266,7 @@
             placeholder="e.g., C"
             required
           />
-        </div>
+        </div> -->
 
         <!-- Age block -->
         <div class="demographic-block">
@@ -261,7 +314,6 @@
           Select the number that best represents your own experience.
         </p>
 
-        <!-- Q1 -->
         <table class="matrix-table">
           <thead>
             <tr>
@@ -277,7 +329,6 @@
           </thead>
 
           <tbody>
-            <!-- Q1 -->
             <tr>
               <td class="matrix-question">
                 How familiar are you with air traffic control tasks or
@@ -294,7 +345,6 @@
               <td><input type="radio" name="exp_atc_tasks" value="7" /></td>
             </tr>
 
-            <!-- Q2 -->
             <tr>
               <td class="matrix-question">
                 How confident are you in interpreting flight or traffic
@@ -311,11 +361,9 @@
               <td><input type="radio" name="exp_radar_conf" value="7" /></td>
             </tr>
 
-            <!-- Q3 -->
             <tr>
               <td class="matrix-question">
-                How familiar are you with decision-support tools or interfaces
-                used in air traffic control?
+               How familiar are you with decision-support interfaces used in air traffic control?
               </td>
               <td>
                 <input
@@ -333,11 +381,9 @@
               <td><input type="radio" name="exp_dss_familiar" value="7" /></td>
             </tr>
 
-            <!-- Q4 -->
             <tr>
               <td class="matrix-question">
-                How confident are you in learning and using unfamiliar
-                interfaces?
+                How confident are you in learning and using unfamiliar interfaces?
               </td>
               <td>
                 <input
@@ -359,221 +405,830 @@
       </section>
 
       <section>
-        <h2>Grouping and Importance</h2>
-
-        <h3>Step 1. Assign elements to groups (2–5 groups)</h3>
-        <p class="small-note">
-          For each element, choose a group ID (e.g., 1–5). You may freely decide
-          which elements belong together.
+        <h3>Q1: Grouping</h3>
+        <p>
+          Drag each element into one of the groups below. <br />
+          You may create <strong>2–5 groups</strong> in total, and you are free
+          to decide which elements belong together (a “Doesn’t fit anywhere” group is available).
         </p>
-        <table>
-          <thead>
-            <tr>
-              <th>Interface element</th>
-              <th>Group ID (1–5)</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>Path safety (safe / unsafe)</td>
-              <td>
-                <select name="group_path_safety" required>
-                  <option value="">Select...</option>
-                  <option>1</option>
-                  <option>2</option>
-                  <option>3</option>
-                  <option>4</option>
-                  <option>5</option>
-                </select>
-              </td>
-            </tr>
-            <tr>
-              <td>Exit waypoint highlight (Exit COPX)</td>
-              <td>
-                <select name="group_exit_copx" required>
-                  <option value="">Select...</option>
-                  <option>1</option>
-                  <option>2</option>
-                  <option>3</option>
-                  <option>4</option>
-                  <option>5</option>
-                </select>
-              </td>
-            </tr>
-            <tr>
-              <td>Related aircraft highlight</td>
-              <td>
-                <select name="group_related_ac" required>
-                  <option value="">Select...</option>
-                  <option>1</option>
-                  <option>2</option>
-                  <option>3</option>
-                  <option>4</option>
-                  <option>5</option>
-                </select>
-              </td>
-            </tr>
-            <tr>
-              <td>Feasible steps (current heading)</td>
-              <td>
-                <select name="group_feas_curr" required>
-                  <option value="">Select...</option>
-                  <option>1</option>
-                  <option>2</option>
-                  <option>3</option>
-                  <option>4</option>
-                  <option>5</option>
-                </select>
-              </td>
-            </tr>
-            <tr>
-              <td>Infeasible steps (current heading)</td>
-              <td>
-                <select name="group_infeas_curr" required>
-                  <option value="">Select...</option>
-                  <option>1</option>
-                  <option>2</option>
-                  <option>3</option>
-                  <option>4</option>
-                  <option>5</option>
-                </select>
-              </td>
-            </tr>
-            <tr>
-              <td>Feasible steps (alternative heading)</td>
-              <td>
-                <select name="group_feas_alt" required>
-                  <option value="">Select...</option>
-                  <option>1</option>
-                  <option>2</option>
-                  <option>3</option>
-                  <option>4</option>
-                  <option>5</option>
-                </select>
-              </td>
-            </tr>
-            <tr>
-              <td>Infeasible steps (alternative heading)</td>
-              <td>
-                <select name="group_infeas_alt" required>
-                  <option value="">Select...</option>
-                  <option>1</option>
-                  <option>2</option>
-                  <option>3</option>
-                  <option>4</option>
-                  <option>5</option>
-                </select>
-              </td>
-            </tr>
-            <tr>
-              <td>Added track miles (mile delay)</td>
-              <td>
-                <select name="group_mile_delay" required>
-                  <option value="">Select...</option>
-                  <option>1</option>
-                  <option>2</option>
-                  <option>3</option>
-                  <option>4</option>
-                  <option>5</option>
-                </select>
-              </td>
-            </tr>
-            <tr>
-              <td>Time delay</td>
-              <td>
-                <select name="group_time_delay" required>
-                  <option value="">Select...</option>
-                  <option>1</option>
-                  <option>2</option>
-                  <option>3</option>
-                  <option>4</option>
-                  <option>5</option>
-                </select>
-              </td>
-            </tr>
-            <tr>
-              <td>Line from selected point to COPX (second-leg line)</td>
-              <td>
-                <select name="group_second_leg" required>
-                  <option value="">Select...</option>
-                  <option>1</option>
-                  <option>2</option>
-                  <option>3</option>
-                  <option>4</option>
-                  <option>5</option>
-                </select>
-              </td>
-            </tr>
-            <tr>
-              <td>Countdown to guiding-back point</td>
-              <td>
-                <select name="group_countdown" required>
-                  <option value="">Select...</option>
-                  <option>1</option>
-                  <option>2</option>
-                  <option>3</option>
-                  <option>4</option>
-                  <option>5</option>
-                </select>
-              </td>
-            </tr>
-          </tbody>
-        </table>
 
-        <h3>Step 2. Name your groups</h3>
-        <p class="small-note">
-          If you did not use a group number, you may leave its name blank.
-        </p>
-        <table>
-          <thead>
-            <tr>
-              <th>Group ID</th>
-              <th>Group name</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>1</td>
-              <td><input type="text" name="group_name_1" /></td>
-            </tr>
-            <tr>
-              <td>2</td>
-              <td><input type="text" name="group_name_2" /></td>
-            </tr>
-            <tr>
-              <td>3</td>
-              <td><input type="text" name="group_name_3" /></td>
-            </tr>
-            <tr>
-              <td>4</td>
-              <td><input type="text" name="group_name_4" /></td>
-            </tr>
-            <tr>
-              <td>5</td>
-              <td><input type="text" name="group_name_5" /></td>
-            </tr>
-          </tbody>
-        </table>
+        <style>
+          
+        </style>
 
-        <h3>Step 3. Importance rating (within groups)</h3>
-        <p class="small-note">
-          Click the button below to generate importance rating inputs based on
-          the groups you defined in Step 1.
-        </p>
-        <button type="button" class="secondary-btn" onclick="generateStep3()">
-          Generate ratings from my groups
-        </button>
+        <!-- ELEMENT POOL -->
+        <div id="elements-pool">
+          <div class="draggable" data-element="path_cop">
+            Path to Coordination Point
+          </div>
+          <div class="draggable" data-element="exit_cop">
+            Exit Coordination Point (XCOP)
+          </div>
+          <div class="draggable" data-element="alignment_zone">
+            Alignment Zone
+          </div>
+          <div class="draggable" data-element="related_ac">
+            Related Aircraft
+          </div>
+          <div class="draggable" data-element="feasible_current">
+            Feasible Steps (Current heading)
+          </div>
+          <div class="draggable" data-element="infeasible_current">
+            Infeasible Steps (Current heading)
+          </div>
+          <div class="draggable" data-element="feasible_alt">
+            Feasible Steps (Alternative heading)
+          </div>
+          <div class="draggable" data-element="infeasible_alt">
+            Infeasible Steps (Alternative heading)
+          </div>
+          <div class="draggable" data-element="extra_miles">Extra Miles</div>
+          <div class="draggable" data-element="time_delay">Time Delay</div>
+          <div class="draggable" data-element="second_leg">Second-Leg Path</div>
+          <div class="draggable" data-element="countdown">Countdown Timer</div>
+        </div>
 
-        <div id="step3-container" style="margin-top: 15px"></div>
+        <br />
+
+        <!-- GROUP BOXES -->
+        <div class="groups-wrapper">
+          <div class="group-dropzone" data-group="1">Group 1</div>
+          <div class="group-dropzone" data-group="2">Group 2</div>
+          <div class="group-dropzone" data-group="3">Group 3</div>
+          <div class="group-dropzone" data-group="4">Group 4</div>
+          <div class="group-dropzone" data-group="5">Group 5</div>
+          <div class="group-dropzone" data-group="6">Doesn’t fit anywhere</div>
+        </div>
+
+        <!-- Hidden Inputs for group results -->
+        <input type="hidden" name="group_path_cop" id="group_path_cop" />
+        <input type="hidden" name="group_exit_cop" id="group_exit_cop" />
+        <input
+          type="hidden"
+          name="group_alignment_zone"
+          id="group_alignment_zone"
+        />
+        <input type="hidden" name="group_related_ac" id="group_related_ac" />
+
+        <input
+          type="hidden"
+          name="group_feasible_current"
+          id="group_feasible_current"
+        />
+        <input
+          type="hidden"
+          name="group_infeasible_current"
+          id="group_infeasible_current"
+        />
+        <input
+          type="hidden"
+          name="group_feasible_alt"
+          id="group_feasible_alt"
+        />
+        <input
+          type="hidden"
+          name="group_infeasible_alt"
+          id="group_infeasible_alt"
+        />
+
+        <input type="hidden" name="group_extra_miles" id="group_extra_miles" />
+        <input type="hidden" name="group_time_delay" id="group_time_delay" />
+        <input type="hidden" name="group_second_leg" id="group_second_leg" />
+        <input type="hidden" name="group_countdown" id="group_countdown" />
+
+        <label for="group_explanation" class="small-note">
+          If helpful, you may add a short name or explanation for your groups.
+        </label>
+        <textarea
+          id="group_explanation"
+          name="group_explanation"
+          style="
+            width: 100%;
+            max-width: 100%;
+            box-sizing: border-box;
+            margin-top: 6px;
+            padding: 15px;
+            font-size: 14px;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            resize: vertical;
+          "
+        ></textarea>
+
+        <script>
+          const draggables = document.querySelectorAll(".draggable");
+          const dropzones = document.querySelectorAll(".group-dropzone");
+
+          draggables.forEach((el) => {
+            el.draggable = true;
+            el.addEventListener("dragstart", (e) => {
+              e.dataTransfer.setData("text/plain", el.dataset.element);
+            });
+          });
+
+          dropzones.forEach((zone) => {
+            zone.addEventListener("dragover", (e) => e.preventDefault());
+            zone.addEventListener("drop", (e) => {
+              e.preventDefault();
+              const elementKey = e.dataTransfer.getData("text/plain");
+              const draggedEl = document.querySelector(
+                `.draggable[data-element="${elementKey}"]`
+              );
+              zone.appendChild(draggedEl);
+              const groupId = zone.dataset.group;
+              const hidden = document.getElementById(`group_${elementKey}`);
+              if (hidden) hidden.value = groupId;
+            });
+          });
+        </script>
+
+          <script>
+              // Randomize element order on load
+              window.addEventListener("DOMContentLoaded", () => {
+                const pool = document.getElementById("elements-pool");
+                const items = Array.from(pool.children);
+
+                // Fisher–Yates shuffle
+                for (let i = items.length - 1; i > 0; i--) {
+                  const j = Math.floor(Math.random() * (i + 1));
+
+                  // swap items in the array
+                  [items[i], items[j]] = [items[j], items[i]];
+                }
+
+                // re-append in shuffled order
+                items.forEach(item => pool.appendChild(item));
+              });
+    </script>
       </section>
 
-      <!-- BLOCK 2: SLIDERS -->
       <section>
-        <h2>Interface style preferences</h2>
+        <h3>Q2: Rating</h3>
+        <p>
+          Please rate how helpful each interface element was for your task. </br>
+          <strong>1 = Not helpful at all, 7 = Extremely helpful. </strong>
+        </p>
+
+        <style>
+          table.likert-table {
+            border-collapse: collapse;
+            margin-top: 10px;
+          }
+          table.likert-table th,
+          table.likert-table td {
+            padding: 4px 6px;
+            text-align: center;
+          }
+          table.likert-table th.element-col,
+          table.likert-table td.element-col {
+            text-align: left;
+            padding-right: 10px;
+            width: 300px;
+          }
+
+          .likert-option label {
+            display: inline-block;
+            width: 100%;
+            cursor: pointer;
+          }
+        </style>
+
+        <table class="likert-table">
+          <thead>
+            <tr class="sub-desc">
+  
+            <tr>
+              <th class="element-col">Interface element</th>
+              <th>1</th>
+              <th>2</th>
+              <th>3</th>
+              <th>4</th>
+              <th>5</th>
+              <th>6</th>
+              <th>7</th>
+            </tr>
+
+            <tr class="likert-hint-row">
+              <td></td>
+              <td colspan="3" class="hint-left">Less helpful</td>
+              <td>  Mid</td>
+              <td colspan="3" class="hint-right">More helpful</td>
+            </tr>
+          </thead>
+          <tbody>
+            <!-- 1. Path to Coordination Point -->
+            <tr>
+              <td class="element-col">Path to Coordination Point</td>
+
+              <td class="likert-option">
+                <label>
+                  <input
+                    type="radio"
+                    name="importance_path_cop"
+                    value="1"
+                    required
+                  />
+                </label>
+              </td>
+              <td class="likert-option">
+                <label>
+                  <input type="radio" name="importance_path_cop" value="2" />
+                </label>
+              </td>
+              <td class="likert-option">
+                <label>
+                  <input type="radio" name="importance_path_cop" value="3" />
+                </label>
+              </td>
+              <td class="likert-option">
+                <label>
+                  <input type="radio" name="importance_path_cop" value="4" />
+                </label>
+              </td>
+              <td class="likert-option">
+                <label>
+                  <input type="radio" name="importance_path_cop" value="5" />
+                </label>
+              </td>
+              <td class="likert-option">
+                <label>
+                  <input type="radio" name="importance_path_cop" value="6" />
+                </label>
+              </td>
+              <td class="likert-option">
+                <label>
+                  <input type="radio" name="importance_path_cop" value="7" />
+                </label>
+              </td>
+            </tr>
+
+            <!-- 2. Exit Coordination Point (XCOP) -->
+            <tr>
+              <td class="element-col">Exit Coordination Point (XCOP)</td>
+              <td class="likert-option">
+                <label
+                  ><input
+                    type="radio"
+                    name="importance_exit_cop"
+                    value="1"
+                    required
+                /></label>
+              </td>
+              <td class="likert-option">
+                <label
+                  ><input type="radio" name="importance_exit_cop" value="2"
+                /></label>
+              </td>
+              <td class="likert-option">
+                <label
+                  ><input type="radio" name="importance_exit_cop" value="3"
+                /></label>
+              </td>
+              <td class="likert-option">
+                <label
+                  ><input type="radio" name="importance_exit_cop" value="4"
+                /></label>
+              </td>
+              <td class="likert-option">
+                <label
+                  ><input type="radio" name="importance_exit_cop" value="5"
+                /></label>
+              </td>
+              <td class="likert-option">
+                <label
+                  ><input type="radio" name="importance_exit_cop" value="6"
+                /></label>
+              </td>
+              <td class="likert-option">
+                <label
+                  ><input type="radio" name="importance_exit_cop" value="7"
+                /></label>
+              </td>
+            </tr>
+
+            <!-- 3. Alignment Zone -->
+            <tr>
+              <td class="element-col">Alignment Zone</td>
+              <td class="likert-option">
+                <label
+                  ><input
+                    type="radio"
+                    name="importance_alignment_zone"
+                    value="1"
+                    required
+                /></label>
+              </td>
+              <td class="likert-option">
+                <label
+                  ><input
+                    type="radio"
+                    name="importance_alignment_zone"
+                    value="2"
+                /></label>
+              </td>
+              <td class="likert-option">
+                <label
+                  ><input
+                    type="radio"
+                    name="importance_alignment_zone"
+                    value="3"
+                /></label>
+              </td>
+              <td class="likert-option">
+                <label
+                  ><input
+                    type="radio"
+                    name="importance_alignment_zone"
+                    value="4"
+                /></label>
+              </td>
+              <td class="likert-option">
+                <label
+                  ><input
+                    type="radio"
+                    name="importance_alignment_zone"
+                    value="5"
+                /></label>
+              </td>
+              <td class="likert-option">
+                <label
+                  ><input
+                    type="radio"
+                    name="importance_alignment_zone"
+                    value="6"
+                /></label>
+              </td>
+              <td class="likert-option">
+                <label
+                  ><input
+                    type="radio"
+                    name="importance_alignment_zone"
+                    value="7"
+                /></label>
+              </td>
+            </tr>
+
+            <!-- 4. Related Aircraft -->
+            <tr>
+              <td class="element-col">Related Aircraft</td>
+              <td class="likert-option">
+                <label
+                  ><input
+                    type="radio"
+                    name="importance_related_ac"
+                    value="1"
+                    required
+                /></label>
+              </td>
+              <td class="likert-option">
+                <label
+                  ><input type="radio" name="importance_related_ac" value="2"
+                /></label>
+              </td>
+              <td class="likert-option">
+                <label
+                  ><input type="radio" name="importance_related_ac" value="3"
+                /></label>
+              </td>
+              <td class="likert-option">
+                <label
+                  ><input type="radio" name="importance_related_ac" value="4"
+                /></label>
+              </td>
+              <td class="likert-option">
+                <label
+                  ><input type="radio" name="importance_related_ac" value="5"
+                /></label>
+              </td>
+              <td class="likert-option">
+                <label
+                  ><input type="radio" name="importance_related_ac" value="6"
+                /></label>
+              </td>
+              <td class="likert-option">
+                <label
+                  ><input type="radio" name="importance_related_ac" value="7"
+                /></label>
+              </td>
+            </tr>
+
+            <!-- 5. Feasible Steps (Current heading) -->
+            <tr>
+              <td class="element-col">Feasible Steps (Current heading)</td>
+              <td class="likert-option">
+                <label
+                  ><input
+                    type="radio"
+                    name="importance_feasible_current"
+                    value="1"
+                    required
+                /></label>
+              </td>
+              <td class="likert-option">
+                <label
+                  ><input
+                    type="radio"
+                    name="importance_feasible_current"
+                    value="2"
+                /></label>
+              </td>
+              <td class="likert-option">
+                <label
+                  ><input
+                    type="radio"
+                    name="importance_feasible_current"
+                    value="3"
+                /></label>
+              </td>
+              <td class="likert-option">
+                <label
+                  ><input
+                    type="radio"
+                    name="importance_feasible_current"
+                    value="4"
+                /></label>
+              </td>
+              <td class="likert-option">
+                <label
+                  ><input
+                    type="radio"
+                    name="importance_feasible_current"
+                    value="5"
+                /></label>
+              </td>
+              <td class="likert-option">
+                <label
+                  ><input
+                    type="radio"
+                    name="importance_feasible_current"
+                    value="6"
+                /></label>
+              </td>
+              <td class="likert-option">
+                <label
+                  ><input
+                    type="radio"
+                    name="importance_feasible_current"
+                    value="7"
+                /></label>
+              </td>
+            </tr>
+
+            <!-- 6. Infeasible Steps (Current heading) -->
+            <tr>
+              <td class="element-col">Infeasible Steps (Current heading)</td>
+              <td class="likert-option">
+                <label
+                  ><input
+                    type="radio"
+                    name="importance_infeasible_current"
+                    value="1"
+                    required
+                /></label>
+              </td>
+              <td class="likert-option">
+                <label
+                  ><input
+                    type="radio"
+                    name="importance_infeasible_current"
+                    value="2"
+                /></label>
+              </td>
+              <td class="likert-option">
+                <label
+                  ><input
+                    type="radio"
+                    name="importance_infeasible_current"
+                    value="3"
+                /></label>
+              </td>
+              <td class="likert-option">
+                <label
+                  ><input
+                    type="radio"
+                    name="importance_infeasible_current"
+                    value="4"
+                /></label>
+              </td>
+              <td class="likert-option">
+                <label
+                  ><input
+                    type="radio"
+                    name="importance_infeasible_current"
+                    value="5"
+                /></label>
+              </td>
+              <td class="likert-option">
+                <label
+                  ><input
+                    type="radio"
+                    name="importance_infeasible_current"
+                    value="6"
+                /></label>
+              </td>
+              <td class="likert-option">
+                <label
+                  ><input
+                    type="radio"
+                    name="importance_infeasible_current"
+                    value="7"
+                /></label>
+              </td>
+            </tr>
+
+            <!-- 7. Feasible Steps (Alternative heading) -->
+            <tr>
+              <td class="element-col">Feasible Steps (Alternative heading)</td>
+              <td class="likert-option">
+                <label
+                  ><input
+                    type="radio"
+                    name="importance_feasible_alt"
+                    value="1"
+                    required
+                /></label>
+              </td>
+              <td class="likert-option">
+                <label
+                  ><input type="radio" name="importance_feasible_alt" value="2"
+                /></label>
+              </td>
+              <td class="likert-option">
+                <label
+                  ><input type="radio" name="importance_feasible_alt" value="3"
+                /></label>
+              </td>
+              <td class="likert-option">
+                <label
+                  ><input type="radio" name="importance_feasible_alt" value="4"
+                /></label>
+              </td>
+              <td class="likert-option">
+                <label
+                  ><input type="radio" name="importance_feasible_alt" value="5"
+                /></label>
+              </td>
+              <td class="likert-option">
+                <label
+                  ><input type="radio" name="importance_feasible_alt" value="6"
+                /></label>
+              </td>
+              <td class="likert-option">
+                <label
+                  ><input type="radio" name="importance_feasible_alt" value="7"
+                /></label>
+              </td>
+            </tr>
+
+            <!-- 8. Infeasible Steps (Alternative heading) -->
+            <tr>
+              <td class="element-col">
+                Infeasible Steps (Alternative heading)
+              </td>
+              <td class="likert-option">
+                <label
+                  ><input
+                    type="radio"
+                    name="importance_infeasible_alt"
+                    value="1"
+                    required
+                /></label>
+              </td>
+              <td class="likert-option">
+                <label
+                  ><input
+                    type="radio"
+                    name="importance_infeasible_alt"
+                    value="2"
+                /></label>
+              </td>
+              <td class="likert-option">
+                <label
+                  ><input
+                    type="radio"
+                    name="importance_infeasible_alt"
+                    value="3"
+                /></label>
+              </td>
+              <td class="likert-option">
+                <label
+                  ><input
+                    type="radio"
+                    name="importance_infeasible_alt"
+                    value="4"
+                /></label>
+              </td>
+              <td class="likert-option">
+                <label
+                  ><input
+                    type="radio"
+                    name="importance_infeasible_alt"
+                    value="5"
+                /></label>
+              </td>
+              <td class="likert-option">
+                <label
+                  ><input
+                    type="radio"
+                    name="importance_infeasible_alt"
+                    value="6"
+                /></label>
+              </td>
+              <td class="likert-option">
+                <label
+                  ><input
+                    type="radio"
+                    name="importance_infeasible_alt"
+                    value="7"
+                /></label>
+              </td>
+            </tr>
+
+            <!-- 9. Extra Miles -->
+            <tr>
+              <td class="element-col">Extra Miles</td>
+              <td class="likert-option">
+                <label
+                  ><input
+                    type="radio"
+                    name="importance_extra_miles"
+                    value="1"
+                    required
+                /></label>
+              </td>
+              <td class="likert-option">
+                <label
+                  ><input type="radio" name="importance_extra_miles" value="2"
+                /></label>
+              </td>
+              <td class="likert-option">
+                <label
+                  ><input type="radio" name="importance_extra_miles" value="3"
+                /></label>
+              </td>
+              <td class="likert-option">
+                <label
+                  ><input type="radio" name="importance_extra_miles" value="4"
+                /></label>
+              </td>
+              <td class="likert-option">
+                <label
+                  ><input type="radio" name="importance_extra_miles" value="5"
+                /></label>
+              </td>
+              <td class="likert-option">
+                <label
+                  ><input type="radio" name="importance_extra_miles" value="6"
+                /></label>
+              </td>
+              <td class="likert-option">
+                <label
+                  ><input type="radio" name="importance_extra_miles" value="7"
+                /></label>
+              </td>
+            </tr>
+
+            <!-- 10. Time Delay -->
+            <tr>
+              <td class="element-col">Time Delay</td>
+              <td class="likert-option">
+                <label
+                  ><input
+                    type="radio"
+                    name="importance_time_delay"
+                    value="1"
+                    required
+                /></label>
+              </td>
+              <td class="likert-option">
+                <label
+                  ><input type="radio" name="importance_time_delay" value="2"
+                /></label>
+              </td>
+              <td class="likert-option">
+                <label
+                  ><input type="radio" name="importance_time_delay" value="3"
+                /></label>
+              </td>
+              <td class="likert-option">
+                <label
+                  ><input type="radio" name="importance_time_delay" value="4"
+                /></label>
+              </td>
+              <td class="likert-option">
+                <label
+                  ><input type="radio" name="importance_time_delay" value="5"
+                /></label>
+              </td>
+              <td class="likert-option">
+                <label
+                  ><input type="radio" name="importance_time_delay" value="6"
+                /></label>
+              </td>
+              <td class="likert-option">
+                <label
+                  ><input type="radio" name="importance_time_delay" value="7"
+                /></label>
+              </td>
+            </tr>
+
+            <!-- 11. Second-Leg Path -->
+            <tr>
+              <td class="element-col">Second-Leg Path</td>
+              <td class="likert-option">
+                <label
+                  ><input
+                    type="radio"
+                    name="importance_second_leg"
+                    value="1"
+                    required
+                /></label>
+              </td>
+              <td class="likert-option">
+                <label
+                  ><input type="radio" name="importance_second_leg" value="2"
+                /></label>
+              </td>
+              <td class="likert-option">
+                <label
+                  ><input type="radio" name="importance_second_leg" value="3"
+                /></label>
+              </td>
+              <td class="likert-option">
+                <label
+                  ><input type="radio" name="importance_second_leg" value="4"
+                /></label>
+              </td>
+              <td class="likert-option">
+                <label
+                  ><input type="radio" name="importance_second_leg" value="5"
+                /></label>
+              </td>
+              <td class="likert-option">
+                <label
+                  ><input type="radio" name="importance_second_leg" value="6"
+                /></label>
+              </td>
+              <td class="likert-option">
+                <label
+                  ><input type="radio" name="importance_second_leg" value="7"
+                /></label>
+              </td>
+            </tr>
+
+            <!-- 12. Countdown Timer -->
+            <tr>
+              <td class="element-col">Countdown Timer</td>
+              <td class="likert-option">
+                <label
+                  ><input
+                    type="radio"
+                    name="importance_countdown"
+                    value="1"
+                    required
+                /></label>
+              </td>
+              <td class="likert-option">
+                <label
+                  ><input type="radio" name="importance_countdown" value="2"
+                /></label>
+              </td>
+              <td class="likert-option">
+                <label
+                  ><input type="radio" name="importance_countdown" value="3"
+                /></label>
+              </td>
+              <td class="likert-option">
+                <label
+                  ><input type="radio" name="importance_countdown" value="4"
+                /></label>
+              </td>
+              <td class="likert-option">
+                <label
+                  ><input type="radio" name="importance_countdown" value="5"
+                /></label>
+              </td>
+              <td class="likert-option">
+                <label
+                  ><input type="radio" name="importance_countdown" value="6"
+                /></label>
+              </td>
+              <td class="likert-option">
+                <label
+                  ><input type="radio" name="importance_countdown" value="7"
+                /></label>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+
+      <section>
+        <h3>Q3: Design Preferences</h3>
         <p>Please respond to each item using a 7-point scale.</p>
 
         <table class="matrix-table">
-          <thead>
+          <thead>  
             <tr>
               <th class="matrix-question">Statement</th>
               <th>1</th>
@@ -586,7 +1241,6 @@
             </tr>
           </thead>
           <tbody>
-            <!-- Row 1 -->
             <tr>
               <td class="matrix-question">
                 The interface should display…
@@ -612,13 +1266,12 @@
               <td><input type="radio" name="pref_info_amount" value="7" /></td>
             </tr>
 
-            <!-- Row 2 -->
             <tr>
               <td class="matrix-question">
                 I prefer interface elements that are…
                 <br />
                 <span class="small-note">
-                  1 = Opaque and prominent, 7 = Transparent and lightweight
+                  1 = Bold and visually strong, 7 = Subtle and lightweight
                 </span>
               </td>
               <td>
@@ -649,14 +1302,12 @@
               </td>
             </tr>
 
-            <!-- Row 4 -->
             <tr>
               <td class="matrix-question">
-                The interface should…
+                The interface should behave...
                 <br />
                 <span class="small-note">
-                  1 = Stay stable and consistent, 7 = Adaptively change based on
-                  the situation
+                  1 = Stay stable and consistent, 7 = Adjust display when needed
                 </span>
               </td>
               <td>
@@ -672,62 +1323,38 @@
 
             <tr>
               <td class="matrix-question">
-                When interacting with the interface, I prefer…
+                The interface should be…
                 <br />
                 <span class="small-note">
-                  1 = Clear structure and guidance, 7 = Freedom to explore and
-                  adjust on my own
+                  1 = More predefined by the system, 7 = More adjustable by the
+                  user
                 </span>
               </td>
               <td>
                 <input
                   type="radio"
-                  name="pref_structure_vs_explore"
+                  name="pref_predefine_vs_adjust"
                   value="1"
                   required
                 />
               </td>
               <td>
-                <input
-                  type="radio"
-                  name="pref_structure_vs_explore"
-                  value="2"
-                />
+                <input type="radio" name="pref_predefine_vs_adjust" value="2" />
               </td>
               <td>
-                <input
-                  type="radio"
-                  name="pref_structure_vs_explore"
-                  value="3"
-                />
+                <input type="radio" name="pref_predefine_vs_adjust" value="3" />
               </td>
               <td>
-                <input
-                  type="radio"
-                  name="pref_structure_vs_explore"
-                  value="4"
-                />
+                <input type="radio" name="pref_predefine_vs_adjust" value="4" />
               </td>
               <td>
-                <input
-                  type="radio"
-                  name="pref_structure_vs_explore"
-                  value="5"
-                />
+                <input type="radio" name="pref_predefine_vs_adjust" value="5" />
               </td>
               <td>
-                <input
-                  type="radio"
-                  name="pref_structure_vs_explore"
-                  value="6"
-                />
+                <input type="radio" name="pref_predefine_vs_adjust" value="6" />
               </td>
               <td>
-                <input
-                  type="radio"
-                  name="pref_structure_vs_explore"
-                  value="7"
-                />
+                <input type="radio" name="pref_predefine_vs_adjust" value="7" />
               </td>
             </tr>
           </tbody>
@@ -740,22 +1367,51 @@
     </form>
 
     <script>
-      // Elements list used for dynamic Step 3
+      document.addEventListener("DOMContentLoaded", () => {
+        const tbody = document.querySelector(".grouping-table tbody");
+        if (!tbody) return;
+
+        const rows = Array.from(tbody.querySelectorAll("tr"));
+
+        for (let i = rows.length - 1; i > 0; i--) {
+          const j = Math.floor(Math.random() * (i + 1));
+          [rows[i], rows[j]] = [rows[j], rows[i]];
+        }
+
+        rows.forEach((row) => tbody.appendChild(row));
+      });
+    </script>
+
+    <script>
+      // Elements list used for Step 3
       const elements = [
-        ["Path safety (safe / unsafe)", "group_path_safety"],
-        ["Exit waypoint highlight (Exit COPX)", "group_exit_copx"],
-        ["Related aircraft highlight", "group_related_ac"],
-        ["Feasible steps (current heading)", "group_feas_curr"],
-        ["Infeasible steps (current heading)", "group_infeas_curr"],
-        ["Feasible steps (alternative heading)", "group_feas_alt"],
-        ["Infeasible steps (alternative heading)", "group_infeas_alt"],
-        ["Added track miles (mile delay)", "group_mile_delay"],
-        ["Time delay", "group_time_delay"],
+        ["Path to Coordination Point", "group_path_to_coordination_point"],
         [
-          "Line from selected point to COPX (second-leg line)",
-          "group_second_leg",
+          "Exit Coordination Point (XCOP)",
+          "group_exit_coordination_point_xcop",
         ],
-        ["Countdown to guiding-back point", "group_countdown"],
+        ["Alignment Zone", "group_alignment_zone"],
+        ["Related Aircraft", "group_related_aircraft"],
+        [
+          "Feasible Steps (Current heading)",
+          "group_feasible_steps_current_heading",
+        ],
+        [
+          "Infeasible Steps (Current heading)",
+          "group_infeasible_steps_current_heading",
+        ],
+        [
+          "Feasible Steps (Alternative heading)",
+          "group_feasible_steps_alternative_heading",
+        ],
+        [
+          "Infeasible Steps (Alternative heading)",
+          "group_infeasible_steps_alternative_heading",
+        ],
+        ["Extra Miles", "group_extra_miles"],
+        ["Time Delay", "group_time_delay"],
+        ["Second-Leg Path", "group_second_leg_path"],
+        ["Countdown Timer", "group_countdown_timer"],
       ];
 
       function generateStep3() {
@@ -789,9 +1445,7 @@
           const note = document.createElement("p");
           note.className = "small-note";
           note.textContent =
-            "Please rank the elements within this group (1 = most important, " +
-            list.length +
-            " = least important), and rate their importance (1–10).";
+            "Please rate the importance of each element in this group (1 = not important at all, 10 = extremely important).";
           block.appendChild(note);
 
           let html = `
@@ -799,7 +1453,6 @@
         <thead>
           <tr>
             <th>Element</th>
-            <th>Within-group rank (1–${list.length})</th>
             <th>Importance (1–10)</th>
           </tr>
         </thead>
@@ -809,54 +1462,23 @@
           list.forEach((label) => {
             const safeName = label.toLowerCase().replace(/[^a-z0-9]+/g, "_");
 
-            // rank options 1..k
-            const rankOptions = Array.from({ length: list.length }, (_, i) => {
-              const v = i + 1;
-              return `<option value="${v}">${v}</option>`;
-            }).join("");
-
-            // importance options 1..10
+            // importance 1..10
             const scoreOptions = Array.from({ length: 10 }, (_, i) => {
               const v = i + 1;
               return `<option value="${v}">${v}</option>`;
             }).join("");
 
-            if (list.length === 1) {
-              // 只有一个元素：rank 固定为 1（hidden），但仍然要评分 1–10
-              html += `
-          <tr>
-            <td>${label}</td>
-            <td>
-              1 (only element in this group)
-              <input type="hidden" name="imp_${safeName}" value="1">
-            </td>
-            <td>
-              <select name="imp_score_${safeName}" required>
-                <option value="">Select…</option>
-                ${scoreOptions}
-              </select>
-            </td>
-          </tr>
-        `;
-            } else {
-              html += `
-          <tr>
-            <td>${label}</td>
-            <td>
-              <select name="imp_${safeName}" required>
-                <option value="">Select…</option>
-                ${rankOptions}
-              </select>
-            </td>
-            <td>
-              <select name="imp_score_${safeName}" required>
-                <option value="">Select…</option>
-                ${scoreOptions}
-              </select>
-            </td>
-          </tr>
-        `;
-            }
+            html += `
+        <tr>
+          <td>${label}</td>
+          <td>
+            <select name="score_${safeName}" required>
+              <option value="">Select…</option>
+              ${scoreOptions}
+            </select>
+          </td>
+        </tr>
+      `;
           });
 
           html += "</tbody></table><br>";
@@ -876,12 +1498,11 @@
       document
         .getElementById("surveyForm")
         .addEventListener("submit", function (e) {
-          e.preventDefault(); // prevent actual form submission
+          e.preventDefault();
 
           const formData = new FormData(this);
           const obj = {};
 
-          // collect all responses
           formData.forEach((value, key) => {
             if (obj[key]) {
               if (!Array.isArray(obj[key])) obj[key] = [obj[key]];
@@ -891,7 +1512,6 @@
             }
           });
 
-          // --- 1. Participant ID & Condition ---
           const pid = (formData.get("participant_id") || "anon").replace(
             /\s+/g,
             "_"
@@ -901,7 +1521,6 @@
             "_"
           );
 
-          // --- 2. timestamp ---
           const now = new Date();
           const pad = (n) => String(n).padStart(2, "0");
           const timestamp =
@@ -913,10 +1532,8 @@
             pad(now.getMinutes()) +
             pad(now.getSeconds());
 
-          // --- 3. final filename ---
-          const filename = `${pid}_${condition}_ui_pref_${timestamp}.json`;
+          const filename = `${pid}_${condition}_ui_${timestamp}.json`;
 
-          // --- 4. download JSON ---
           const jsonStr = JSON.stringify(obj, null, 2);
           const blob = new Blob([jsonStr], { type: "application/json" });
           const url = URL.createObjectURL(blob);

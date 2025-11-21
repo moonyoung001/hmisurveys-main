@@ -29,7 +29,18 @@
       table.scale th:first-child,
       table.scale td:first-child {
         text-align: left;
-        width: 55%;
+        width: 40%;
+      }
+      table.scale tbody tr:hover {
+        background-color: #f7faff;
+      }
+      table.scale th:nth-child(n + 2),
+      table.scale td:nth-child(n + 2) {
+        width: 60px; /* 你可以改成 50px / 55px / 65px */
+      }
+      table.scale input[type="radio"] {
+        transform: scale(1.2);
+        cursor: pointer;
       }
       .next {
         margin-top: 20px;
@@ -55,7 +66,7 @@
       <!-- <h2>Trust in Automation Questionnaire</h2> -->
       <p>
         Please rate how much you agree with the following statements about the
-        automated system you interacted with. Use a scale from
+        interface you worked with. Use a scale from
         <strong>1 = Strongly Disagree</strong> to
         <strong>7 = Strongly Agree</strong>.
       </p>
@@ -117,18 +128,19 @@
       const ParticipantID = false; // Set to true to show Participant/Condition fields
 
       /* === Jian et al. (2000) Items ===
-   Positive items → Trust subscale
-   Negative (reversed) items → Distrust subscale
-*/
+         Positive items → Trust subscale
+         Negative (reversed) items → Distrust subscale
+      */
       const items = [
-        "The information displayed on the interface was clear and easy to understand.", // Interpretability
-        "The information displayed on the interface was relevant and useful for the required traffic tasks.", // Relevance
-        "The organisation of the information matched how I approach the required traffic tasks.", // Organisation
-        "The information was presented in a consistent and predictable manner.", // Consistency
-        "The interface contained unnecessary or distracting information.", // Simplicity (reverse)
+        "The displayed information was clear and easy to understand.", // Interpretability
+        "The displayed information was useful for handling traffic situations.", // Relevance
+        "The displayed information was presented in a consistent and predictable manner.", // Consistency
+        "The displayed information felt reliable and trustworthy.", // Reliability
+        "This configuration contained unnecessary or distracting information.", // Simplicity (reverse)
         // "The information displayed on the interface helped me quickly extract what I needed to make decisions.", // Decision Support
-        "The information displayed on the interface felt reliable and trustworthy.", // Reliability
-        "The information displayed on the interface was also useful for other traffic situations.", // Transferability
+        "The configuration fit well with how I understand and reason about traffic situations.", // Organisation
+        "I would recommend this configuration to other users for similar traffic situations.", // Recommendability
+        "I am confident that this configuration could also be useful for other traffic situations.", // Transferability
       ];
 
       // 0-based indices of reversed items (Distrust subscale)
@@ -216,14 +228,14 @@
             html += `<tr><td>${txt}</td><td>${ratings[i]}</td><td>${scored[i]}</td><td>${sub}</td></tr>`;
           });
           html += `</table>
-  <p><strong>Positive mean:</strong> ${positiveMean.toFixed(2)} / 7<br>
-     <strong>Negative mean (reversed):</strong> ${negativeMean.toFixed(
-       2
-     )} / 7<br>
-     <strong>Overall mean:</strong> ${overallMean.toFixed(2)} / 7<br>
-     <strong>Positive-negative difference:</strong> ${positiveMinusNegative.toFixed(
-       2
-     )}</p>`;
+        <p><strong>Positive mean:</strong> ${positiveMean.toFixed(2)} / 7<br>
+           <strong>Negative mean (reversed):</strong> ${negativeMean.toFixed(
+             2
+           )} / 7<br>
+           <strong>Overall mean:</strong> ${overallMean.toFixed(2)} / 7<br>
+           <strong>Positive-negative difference:</strong> ${positiveMinusNegative.toFixed(
+             2
+           )}</p>`;
           document.getElementById("resultsContent").innerHTML = html;
         } else document.getElementById("results").outerText = "Thank you!";
 
